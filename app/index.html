@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A quick overview of project progress, ownership, activity, and priorities.">
+    <title>Project Pulse</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="dashboard dashboard-header">
+        <p class="eyebrow">Team workspace</p>
+        <h1>Project Pulse</h1>
+        <p class="intro">A clear snapshot of what is moving, who is helping, and where contributors can make an impact.</p>
+      </div>
+    </header>
+
+    <main class="dashboard" id="main-content">
+      <section class="projects-section" aria-labelledby="projects-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Current initiatives</p>
+            <h2 id="projects-heading">Projects at a glance</h2>
+          </div>
+          <p id="project-count" class="project-count" aria-live="polite"></p>
+        </div>
+
+        <div id="loading-state" class="state state-loading" role="status">
+          Loading project updates…
+        </div>
+
+        <div id="error-state" class="state state-error" role="alert" hidden>
+          We couldn't load project updates right now. Please refresh and try again.
+        </div>
+
+        <div id="empty-state" class="state state-empty" role="status" hidden>
+          There are no projects to display yet.
+        </div>
+
+        <ul id="project-list" class="project-list" aria-label="Project updates" hidden></ul>
+      </section>
+    </main>
+
+    <script>
+      (function () {
+        "use strict";
+
+        const loadingState = document.getElementById("loading-state");
+        const errorState = document.getElementById("error-state");
+        const emptyState = document.getElementById("empty-state");
+        const projectList = document.getElementById("project-list");
+        const projectCount = document.getElementById("project-count");
+
+        function addText(parent, className, text) {
+          const element = document.createElement("p");
+          element.className = className;
+          element.textContent = text;
+          parent.appendChild(element);
+          return element;
+        }
+
+        function addLabeledValue(parent, label, value, className) {
+          const container = document.createElement("div");
+          container.className = "project-detail " + className;
+
+          const labelElement = document.createElement("dt");
+          labelElement.textContent = label;
+          container.appendChild(labelElement);
+
+          const valueElement = document.createElement("dd");
+          valueElement.textContent = value;
+          container.appendChild(valueElement);
+
+          parent.appendChild(container);
+        }
+
+        function createProjectCard(project) {
+          const item = document.createElement("li");
+          const card = document.createElement("article");
+          card.className = "project-card";
+
+          const heading = document.createElement("h3");
+          heading.className = "project-name";
+          heading.textContent = project.name;
+          card.appendChild(heading);
+
+          const summary = project.summary ||
+            project.name + " is " + project.status.toLowerCase() +
+            ". Contributors can connect with " + project.owner + " for the latest next steps.";
+          addText(card, "project-summary", summary);
+
+          const details = document.createElement("dl");
+          details.className = "project-details";
+          addLabeledValue(details, "Owner", project.owner, "project-owner");
+          addLabeledValue(details, "Status", project.status, "project-status");
+          addLabeledValue(details, "Priority", project.priority, "project-priority");
+          card.appendChild(details);
+
+          const activity = document.createElement("div");
+          activity.className = "project-activity";
+          const activityLabel = document.createElement("h4");
+          activityLabel.textContent = "Recent activity";
+          activity.appendChild(activityLabel);
+          const activityText = document.createElement("p");
+          activityText.textContent = project.recentActivity;
+          activity.appendChild(activityText);
+          card.appendChild(activity);
+
+          item.appendChild(card);
+          return item;
+        }
+
+        function hasRequiredFields(project) {
+          const requiredFields = ["name", "owner", "status", "recentActivity", "priority"];
+          return project &&
+            requiredFields.every(function (field) {
+              return typeof project[field] === "string" && project[field].trim().length > 0;
+            });
+        }
+
+        function renderProjects(projects) {
+          loadingState.hidden = true;
+          errorState.hidden = true;
+          projectList.replaceChildren();
+
+          if (projects.length === 0) {
+            projectList.hidden = true;
+            projectCount.textContent = "0 projects";
+            emptyState.hidden = false;
+            return;
+          }
+
+          emptyState.hidden = true;
+          projectList.hidden = false;
+          projectCount.textContent = projects.length + (projects.length === 1 ? " project" : " projects");
+          projects.forEach(function (project) {
+            projectList.appendChild(createProjectCard(project));
+          });
+        }
+
+        fetch("project-data.json")
+          .then(function (response) {
+            if (!response.ok) {
+              throw new Error("Project data request failed with status " + response.status);
+            }
+            return response.json();
+          })
+          .then(function (data) {
+            if (!data || !Array.isArray(data.projects)) {
+              throw new Error("Project data must contain a top-level projects array");
+            }
+
+            const validProjects = data.projects.filter(hasRequiredFields);
+            if (validProjects.length !== data.projects.length) {
+              throw new Error("One or more projects is missing a required field");
+            }
+
+            renderProjects(validProjects);
+          })
+          .catch(function () {
+            loadingState.hidden = true;
+            projectList.hidden = true;
+            emptyState.hidden = true;
+            projectCount.textContent = "";
+            errorState.hidden = false;
+          });
+      }());
+    </script>
+  </body>
+</html>

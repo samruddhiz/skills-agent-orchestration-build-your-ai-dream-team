@@ -1,0 +1,558 @@
+:root {
+  color-scheme: light;
+  --ink-950: #172033;
+  --ink-800: #2d3a50;
+  --ink-650: #536176;
+  --ink-500: #68768a;
+  --paper: #ffffff;
+  --canvas: #f5f7fb;
+  --line: #dfe5ef;
+  --line-strong: #c8d1df;
+  --brand-700: #3159c9;
+  --brand-600: #416fe1;
+  --brand-100: #e9efff;
+  --success-700: #176c4b;
+  --success-100: #e3f5ed;
+  --warning-700: #8a5a08;
+  --warning-100: #fff3d6;
+  --danger-700: #a13b46;
+  --danger-100: #fde8ea;
+  --shadow-sm: 0 2px 8px rgb(31 48 83 / 0.06);
+  --shadow-md: 0 12px 28px rgb(31 48 83 / 0.09);
+  --radius-sm: 0.5rem;
+  --radius-md: 0.875rem;
+  --radius-lg: 1.25rem;
+  --content-width: 78rem;
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 18rem;
+  background: var(--canvas);
+}
+
+body {
+  min-width: 18rem;
+  min-height: 100vh;
+  margin: 0;
+  color: var(--ink-950);
+  background:
+    radial-gradient(circle at 88% 0%, rgb(225 233 255 / 0.68), transparent 28rem),
+    var(--canvas);
+  line-height: 1.5;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+a {
+  color: var(--brand-700);
+}
+
+a:hover {
+  color: var(--brand-600);
+}
+
+:focus-visible {
+  outline: 3px solid #8aa9ff;
+  outline-offset: 3px;
+}
+
+/* Page frame and dashboard introduction */
+.dashboard {
+  width: min(100% - 2rem, var(--content-width));
+  margin-inline: auto;
+  padding-block: clamp(2rem, 5vw, 4.75rem);
+}
+
+.dashboard-header {
+  display: grid;
+  gap: 0.75rem;
+  margin-bottom: clamp(1.75rem, 4vw, 3rem);
+}
+
+.dashboard-header h1,
+.dashboard-title {
+  max-width: 42rem;
+  margin: 0;
+  color: var(--ink-950);
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.045em;
+}
+
+.dashboard-header p,
+.dashboard-intro {
+  max-width: 42rem;
+  margin: 0;
+  color: var(--ink-650);
+  font-size: clamp(1rem, 1.6vw, 1.125rem);
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--brand-700);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+/* The grid remains useful from a phone through a wide desktop. */
+.projects-grid,
+.project-grid,
+.projects,
+.project-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+.project-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.project-list > li {
+  display: flex;
+  min-width: 0;
+}
+
+.project-list > li > .project-card {
+  width: 100%;
+}
+
+/* Reusable card surface: the primary unit of the Project Pulse UI. */
+.project-card {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  overflow: hidden;
+  padding: clamp(1.15rem, 2.2vw, 1.5rem);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.project-card::before {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 0.25rem;
+  background: var(--brand-600);
+  content: "";
+}
+
+.project-card:hover {
+  border-color: #b8c7e8;
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.project-card:focus-within {
+  border-color: var(--brand-600);
+  box-shadow: 0 0 0 3px rgb(65 111 225 / 0.17), var(--shadow-md);
+}
+
+.project-card-header,
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 0.25rem;
+}
+
+.project-card h2,
+.project-card h3,
+.project-card .name {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: var(--ink-950);
+  font-size: 1.18rem;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+}
+
+.project-card .project-name {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: var(--ink-950);
+  font-size: 1.18rem;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+}
+
+.project-owner,
+.project-card .owner {
+  display: block;
+  margin: 0.32rem 0 0;
+  color: var(--ink-500);
+  font-size: 0.875rem;
+}
+
+.project-card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.project-summary,
+.summary {
+  margin: 1.25rem 0 1.35rem;
+  color: var(--ink-800);
+  font-size: 0.95rem;
+  overflow-wrap: anywhere;
+}
+
+.project-meta {
+  display: grid;
+  gap: 0.85rem;
+  margin: 0;
+  padding: 1rem 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.project-meta > div {
+  display: grid;
+  grid-template-columns: minmax(5.75rem, 0.42fr) 1fr;
+  gap: 0.75rem;
+  align-items: baseline;
+}
+
+.project-meta dt {
+  color: var(--ink-500);
+  font-size: 0.75rem;
+  font-weight: 750;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.project-meta dd {
+  min-width: 0;
+  margin: 0;
+  color: var(--ink-800);
+  font-size: 0.875rem;
+  overflow-wrap: anywhere;
+}
+
+.project-details {
+  display: grid;
+  gap: 0.85rem;
+  margin: 0;
+  padding: 1rem 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.project-detail {
+  display: grid;
+  grid-template-columns: minmax(5.75rem, 0.42fr) 1fr;
+  gap: 0.75rem;
+  min-width: 0;
+  align-items: baseline;
+  margin: 0;
+}
+
+.project-detail dt {
+  color: var(--ink-500);
+  font-size: 0.75rem;
+  font-weight: 750;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.project-detail dd {
+  min-width: 0;
+  margin: 0;
+  color: var(--ink-800);
+  font-size: 0.875rem;
+  overflow-wrap: anywhere;
+}
+
+.project-owner {
+  color: inherit;
+  font-size: inherit;
+}
+
+.project-owner dd {
+  color: var(--ink-800);
+  font-weight: 650;
+}
+
+.recent-activity,
+.project-card .recentActivity {
+  margin: 1rem 0 0;
+  color: var(--ink-650);
+  font-size: 0.875rem;
+  overflow-wrap: anywhere;
+}
+
+.project-activity {
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+.project-activity h4 {
+  margin: 0 0 0.35rem;
+  color: var(--ink-800);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.project-activity p {
+  margin: 0;
+  color: var(--ink-650);
+  font-size: 0.875rem;
+  overflow-wrap: anywhere;
+}
+
+.recent-activity strong,
+.project-card .recentActivity strong {
+  color: var(--ink-800);
+  font-weight: 750;
+}
+
+/* Status and priority badges are compact, high-contrast scanning cues. */
+.status,
+.status-badge,
+.priority,
+.priority-badge {
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 0.3rem 0.62rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.status::before,
+.status-badge::before {
+  width: 0.42rem;
+  height: 0.42rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: currentColor;
+  content: "";
+}
+
+.status,
+.status-badge,
+.status-active,
+[data-status="active"],
+[data-status="on-track"],
+[data-status="on track"],
+[data-status="complete"],
+[data-status="completed"] {
+  color: var(--success-700);
+  background: var(--success-100);
+  border-color: #bfe8d5;
+}
+
+.status-at-risk,
+.status-warning,
+[data-status="at-risk"],
+[data-status="at risk"],
+[data-status="blocked"],
+[data-status="delayed"] {
+  color: var(--warning-700);
+  background: var(--warning-100);
+  border-color: #f1d48b;
+}
+
+.status-paused,
+.status-planned,
+.status-not-started,
+[data-status="paused"],
+[data-status="planned"],
+[data-status="not-started"] {
+  color: var(--ink-650);
+  background: #eef1f6;
+  border-color: #d7dee9;
+}
+
+.status-blocked,
+.status-critical,
+[data-status="critical"] {
+  color: var(--danger-700);
+  background: var(--danger-100);
+  border-color: #f2c2c8;
+}
+
+.priority,
+.priority-badge {
+  color: var(--brand-700);
+  background: var(--brand-100);
+  border-color: #cbd8ff;
+}
+
+.priority-high,
+.priority-critical,
+[data-priority="high"],
+[data-priority="critical"] {
+  color: var(--danger-700);
+  background: var(--danger-100);
+  border-color: #f2c2c8;
+}
+
+.priority-medium,
+[data-priority="medium"] {
+  color: var(--warning-700);
+  background: var(--warning-100);
+  border-color: #f1d48b;
+}
+
+.priority-low,
+[data-priority="low"] {
+  color: var(--success-700);
+  background: var(--success-100);
+  border-color: #bfe8d5;
+}
+
+/* The generated card markup puts the badge value inside its detail <dd>. */
+.project-status dd,
+.project-priority dd {
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 0.3rem 0.62rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.project-status dd {
+  color: var(--brand-700);
+  background: var(--brand-100);
+  border-color: #cbd8ff;
+}
+
+.project-status dd::before {
+  width: 0.42rem;
+  height: 0.42rem;
+  flex: 0 0 auto;
+  margin-right: 0.4rem;
+  border-radius: 50%;
+  background: currentColor;
+  content: "";
+}
+
+.project-priority dd {
+  color: var(--brand-700);
+  background: var(--brand-100);
+  border-color: #cbd8ff;
+}
+
+.project-card[data-priority="high"],
+.project-card[data-priority="critical"],
+.project-card.priority-high,
+.project-card.priority-critical {
+  border-color: #e7c4c9;
+}
+
+.project-card[data-priority="high"]::before,
+.project-card[data-priority="critical"]::before,
+.project-card.priority-high::before,
+.project-card.priority-critical::before {
+  background: var(--danger-700);
+}
+
+/* Loading, empty, and error states should feel intentional rather than blank. */
+.loading-state,
+.empty-state,
+.error-state,
+.dashboard-message {
+  display: grid;
+  min-height: 10rem;
+  place-items: center;
+  padding: 2rem;
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-md);
+  color: var(--ink-650);
+  background: rgb(255 255 255 / 0.7);
+  text-align: center;
+}
+
+.error-state {
+  color: var(--danger-700);
+  border-color: #f2c2c8;
+  background: #fff7f7;
+}
+
+@media (max-width: 40rem) {
+  .dashboard {
+    width: min(100% - 1.25rem, var(--content-width));
+    padding-block: 1.5rem 2.5rem;
+  }
+
+  .dashboard-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .project-card-header,
+  .card-header {
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .project-meta > div,
+  .project-details > .project-detail {
+    grid-template-columns: 1fr;
+    gap: 0.15rem;
+  }
+
+  .project-status dd,
+  .project-priority dd {
+    justify-self: start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

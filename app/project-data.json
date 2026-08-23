@@ -1,0 +1,44 @@
+{
+  "projects": [
+    {
+      "name": "Contributor Onboarding",
+      "owner": "Maya Chen",
+      "status": "In progress",
+      "recentActivity": "Published the first draft of the quick-start guide and scheduled a contributor feedback session.",
+      "priority": "High",
+      "summary": "Make it easier for new contributors to find their first useful task and get a local setup running quickly."
+    },
+    {
+      "name": "Community Events Hub",
+      "owner": "Jordan Alvarez",
+      "status": "At risk",
+      "recentActivity": "The events calendar is ready for review; the team is waiting on the final accessibility audit.",
+      "priority": "High",
+      "summary": "Bring upcoming workshops and community meetups into one welcoming, searchable place."
+    },
+    {
+      "name": "Usage Insights",
+      "owner": "Priya Nair",
+      "status": "In progress",
+      "recentActivity": "Added weekly active-user trends to the reporting prototype and shared findings with support.",
+      "priority": "Medium",
+      "summary": "Give teams a reliable view of how people use the product so they can focus improvements where they matter."
+    },
+    {
+      "name": "Documentation Refresh",
+      "owner": "Leo Martins",
+      "status": "Planning",
+      "recentActivity": "Collected outdated page reports and grouped them into navigation, examples, and API reference workstreams.",
+      "priority": "Medium",
+      "summary": "Refresh the docs structure and examples so contributors and customers can answer common questions independently."
+    },
+    {
+      "name": "Release Readiness",
+      "owner": "Samira Okafor",
+      "status": "On track",
+      "recentActivity": "Completed the regression checklist and confirmed the next release candidate testing window.",
+      "priority": "Low",
+      "summary": "Coordinate the final checks, communication, and support handoff for a confident upcoming release."
+    }
+  ]
+}
